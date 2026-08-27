@@ -16,6 +16,10 @@ use Filament\Tables\Table;
 
 class ForumTopicResource extends Resource
 {
+
+    protected static ?string $navigationLabel = 'Forum teme';
+    protected static ?string $modelLabel = 'forum tema';
+    protected static ?string $pluralModelLabel = 'Forum teme';
     protected static ?string $model = ForumTopic::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

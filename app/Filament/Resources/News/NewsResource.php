@@ -18,6 +18,9 @@ use Filament\Tables\Table;
 
 class NewsResource extends Resource
 {
+    protected static ?string $navigationLabel = 'Vijesti';
+    protected static ?string $modelLabel = 'vijest';
+    protected static ?string $pluralModelLabel = 'Vijesti';
     protected static ?string $model = News::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

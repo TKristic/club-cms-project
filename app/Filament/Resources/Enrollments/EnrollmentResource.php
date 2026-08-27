@@ -16,6 +16,9 @@ use Filament\Tables\Table;
 
 class EnrollmentResource extends Resource
 {
+    protected static ?string $navigationLabel = 'Upisi';
+    protected static ?string $modelLabel = 'upis';
+    protected static ?string $pluralModelLabel = 'Upisi';
     protected static ?string $model = Enrollment::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

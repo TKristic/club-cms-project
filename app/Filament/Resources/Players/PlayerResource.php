@@ -16,6 +16,9 @@ use Filament\Tables\Table;
 
 class PlayerResource extends Resource
 {
+    protected static ?string $navigationLabel = 'Igrači';
+    protected static ?string $modelLabel = 'igrač';
+    protected static ?string $pluralModelLabel = 'Igrači';
     protected static ?string $model = Player::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;

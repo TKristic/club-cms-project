@@ -16,6 +16,9 @@ use Filament\Tables\Table;
 
 class MembershipFeeResource extends Resource
 {
+    protected static ?string $navigationLabel = 'Članarine';
+    protected static ?string $modelLabel = 'članarina';
+    protected static ?string $pluralModelLabel = 'Članarine';
     protected static ?string $model = MembershipFee::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
