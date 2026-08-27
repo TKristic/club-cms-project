@@ -6,11 +6,8 @@ use App\Models\Club;
 use App\Models\News;
 use Illuminate\Support\Str;
 
-class NewsJsonService
-{
-    /** Izvoz svih vijesti u JSON string (pisanje niza zapisa). */
-    public function export(): string
-    {
+class NewsJsonService {
+    public function export(): string {
         $news = News::latest('published_at')->get()->map(fn ($n) => [
             'title'        => $n->title,
             'excerpt'      => $n->excerpt,
@@ -22,9 +19,7 @@ class NewsJsonService
         return json_encode($news, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-    /** Uvoz iz JSON stringa (čitanje niza zapisa). Vraća broj uvezenih. */
-    public function import(string $json): int
-    {
+    public function import(string $json): int {
         $items = json_decode($json, true);
 
         if (! is_array($items)) {

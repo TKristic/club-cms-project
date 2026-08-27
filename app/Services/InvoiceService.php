@@ -9,10 +9,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Services\Hub3BarcodeService;
 
-class InvoiceService
-{
-    public function generateForFee(MembershipFee $fee): Invoice
-    {
+class InvoiceService {
+    public function generateForFee(MembershipFee $fee): Invoice {
         $fee->loadMissing('player', 'club');
 
         $reference = now()->format('Y') . '-' . str_pad($fee->id, 6, '0', STR_PAD_LEFT);
@@ -27,7 +25,6 @@ class InvoiceService
             ]
         );
 
-        // HUB-3A barkod (data-URI), ako klub ima IBAN
         $barcode = null;
         if ($fee->club->iban) {
             $barcode = app(\App\Services\Hub3BarcodeService::class)->dataUri([
@@ -43,7 +40,6 @@ class InvoiceService
             ]);
         }
 
-        // render PDF-a (master-detail: klub + igrač + članarina)
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.uplatnica', [
             'invoice' => $invoice,
             'fee'     => $fee,

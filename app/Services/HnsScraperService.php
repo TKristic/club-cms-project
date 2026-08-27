@@ -7,30 +7,32 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
 
-class HnsScraperService
-{
-    /** Dohvati i parsiraj HNS podatke (keširano 1h). */
-    public function data(): array
-    {
-        $url = Club::value('hns_url');
-        if (! $url) {
+class HnsScraperService {
+
+    protected string $cacheKey = 'hns_data';
+    protected int $cacheMinutes = 60;
+    protected ?string $url = null;
+
+    public function __construct() {
+        $this->url = Club::value('hns_url');
+    }
+
+    public function data(): array {
+        if (! $this->url) {
             return ['ok' => false, 'error' => 'HNS link nije postavljen u postavkama kluba.'];
         }
 
-        return Cache::remember('hns_data', now()->addHour(), function () use ($url) {
-            return $this->scrape($url);
+        return Cache::remember($this->cacheKey, now()->addMinutes($this->cacheMinutes), function () {
+            return $this->scrape($this->url);
         });
     }
 
-    /** Ručno osvježi (očisti cache). */
-    public function refresh(): array
-    {
+    public function refresh(): array {
         Cache::forget('hns_data');
         return $this->data();
     }
 
-    protected function scrape(string $url): array
-    {
+    protected function scrape(string $url): array {
         try {
             $html = Http::withHeaders([
                 'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
@@ -50,12 +52,10 @@ class HnsScraperService
             'fetched_at'=> now()->toDateTimeString(),
             'standings' => $this->parseStandings($crawler),
             'fixtures'  => $this->parseFixtures($crawler),
-            // 'raw' se koristi samo za debug (dolje)
         ];
     }
 
-    protected function parseStandings(Crawler $crawler): array
-    {
+    protected function parseStandings(Crawler $crawler): array {
         $node = $crawler->filter('.competition_table.type1');
         if ($node->count() === 0) {
             return ['title' => null, 'rows' => []];
@@ -88,8 +88,7 @@ class HnsScraperService
         return ['title' => $title, 'rows' => $rows];
     }
 
-    protected function parseFixtures(Crawler $crawler): array
-    {
+    protected function parseFixtures(Crawler $crawler): array {
         $node = $crawler->filter('.matchlist');
         if ($node->count() === 0) {
             return [];
@@ -116,16 +115,12 @@ class HnsScraperService
         });
     }
 
-    /** Siguran dohvat teksta iz pod-elementa (prazno ako ne postoji). */
-    protected function text(Crawler $node, string $selector): string
-    {
+    protected function text(Crawler $node, string $selector): string {
         $found = $node->filter($selector);
         return $found->count() ? trim($found->first()->text()) : '';
     }
 
-    /** Izvuče ID kluba iz HNS URL-a (npr. .../klubovi/119428/...). */
-    public function clubId(): ?string
-    {
+    public function clubId(): ?string {
         $url = \App\Models\Club::value('hns_url');
         if ($url && preg_match('#/klubovi/(\d+)/#', $url, $m)) {
             return $m[1];
@@ -133,9 +128,7 @@ class HnsScraperService
         return null;
     }
 
-    /** Sljedeće 3 nadolazeće + zadnje 3 odigrane utakmice. */
-    public function splitFixtures(array $fixtures): array
-    {
+    public function splitFixtures(array $fixtures): array {
         $played = array_values(array_filter($fixtures, fn ($m) => $m['played']));
         $upcoming = array_values(array_filter($fixtures, fn ($m) => ! $m['played']));
 

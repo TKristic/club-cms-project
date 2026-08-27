@@ -8,19 +8,9 @@ use Le\PaymentBarcodeGenerator\Party;
 use Le\PDF417\PDF417;
 use Le\PDF417\Renderer\ImageRenderer;
 
-class Hub3BarcodeService
-{
-    /**
-     * Vraća PNG HUB-3A barkod kao data-URI (base64) za <img src="...">.
-     *
-     * @param array{
-     *   amount: float, payer_name: string, payer_address?: string, payer_city?: string,
-     *   payee_name: string, payee_address?: string, payee_city?: string,
-     *   iban: string, model?: string, reference: string, description: string
-     * } $p
-     */
-    public function dataUri(array $p): string
-    {
+class Hub3BarcodeService {
+
+    public function dataUri(array $p): string {
 
         $p = array_merge([
             'payer_name'  => 'Clan kluba',
@@ -32,7 +22,6 @@ class Hub3BarcodeService
             'amount' => 0,
         ], $p);
 
-    // ... ostatak metode (new Data(...), Generator, render) ostaje isti
         $data = new Data(
             payer: new Party(
                 name: $p['payer_name'],
@@ -46,7 +35,7 @@ class Hub3BarcodeService
             ),
             iban: $p['iban'],
             currency: 'EUR',
-            amount: (int) round($p['amount'] * 100),   // EUR → centi
+            amount: (int) round($p['amount'] * 100),   
             model: $p['model'] ?? 'HR00',
             reference: $p['reference'],
             code: 'COST',
@@ -58,7 +47,7 @@ class Hub3BarcodeService
             renderer: new ImageRenderer(['format' => 'data-url', 'scale' => 3, 'ratio' => 3]),
         );
 
-        // render($data) vraća Intervention\Image\Image; s 'data-url' formatom to je base64 PNG
-        return (string) $generator->render($data);
+        
+        return (string) $generator->render($data); // base64 PNG
     }
 }

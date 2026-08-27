@@ -15,14 +15,9 @@ class FeeActivationService
         protected ClubMailer $mailer,
     ) {}
 
-    /**
-     * Aktivira jednu grupu za zadani mjesec (period "YYYY-MM").
-     * Vraća sažetak: kreirano, preskočeno, poslano, greške.
-     */
-    public function activateGroup(FeeGroup $group, ?Carbon $date = null): array
-    {
+    public function activateGroup(FeeGroup $group, ?Carbon $date = null): array {
         $date   = $date ?? now();
-        $period = $date->format('Y-m');          // npr. "2026-08"
+        $period = $date->format('Y-m');          
         $season = $this->seasonFor($date);
 
         $summary = ['created' => 0, 'skipped' => 0, 'mailed' => 0, 'errors' => []];
@@ -35,7 +30,6 @@ class FeeActivationService
         $group->loadMissing('players', 'club');
 
         foreach ($group->players as $player) {
-            // ZAŠTITA OD DUPLIKATA: isti igrač + grupa + mjesec
             $exists = MembershipFee::where('fee_group_id', $group->id)
                 ->where('player_id', $player->id)
                 ->where('period', $period)
@@ -48,7 +42,6 @@ class FeeActivationService
 
             $amount = $group->amountForPlayer($player);
 
-            // 1) članarina
             $fee = MembershipFee::create([
                 'club_id'       => $group->club_id,
                 'fee_group_id'  => $group->id,
@@ -61,7 +54,6 @@ class FeeActivationService
             ]);
             $summary['created']++;
 
-            // 2) uplatnica (PDF + HUB-3A)
             try {
                 $invoice = $this->invoices->generateForFee($fee);
             } catch (\Throwable $e) {
@@ -69,7 +61,6 @@ class FeeActivationService
                 continue;
             }
 
-            // 3) mail (email je obavezan, ali za svaki slučaj provjeri)
             if (empty($player->email)) {
                 $summary['errors'][] = "Igrač {$player->first_name} {$player->last_name} nema e-mail — mail preskočen.";
                 continue;
@@ -87,9 +78,7 @@ class FeeActivationService
         return $summary;
     }
 
-    /** Aktivira sve grupe kojima je danas dan naplate. */
-    public function activateDue(?Carbon $date = null): array
-    {
+    public function activateDue(?Carbon $date = null): array {
         $date = $date ?? now();
         $results = [];
 
@@ -104,9 +93,7 @@ class FeeActivationService
         return $results;
     }
 
-    protected function seasonFor(Carbon $date): string
-    {
-        // sezona npr. "2025/2026" — počinje u srpnju
+    protected function seasonFor(Carbon $date): string {
         $year = $date->month >= 7 ? $date->year : $date->year - 1;
         return $year . '/' . ($year + 1);
     }
