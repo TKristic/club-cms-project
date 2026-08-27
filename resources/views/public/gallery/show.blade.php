@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('content')
-<a href="{{ route('gallery.index') }}" class="text-sm text-gray-400 hover:underline">← Sve galerije</a>
+<a href="{{ route('gallery.index') }}" class="text-sm text-gray-400 hover:underline">← {{ __('messages.back_to_galleries') }}</a>
 <h1 class="text-4xl font-extrabold mt-3 mb-2" style="color: var(--klub-primarna)">{{ $gallery->title }}</h1>
 @if($gallery->description)
     <p class="text-gray-600 mb-6 max-w-2xl">{{ $gallery->description }}</p>
 @endif
 
 @if($gallery->media->isEmpty())
-    <p class="text-gray-500">Galerija je prazna.</p>
+    <p class="text-gray-500">{{ __('messages.empty_gallery') }}</p>
 @else
     <div class="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
         @foreach($gallery->media as $m)

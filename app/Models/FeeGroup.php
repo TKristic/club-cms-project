@@ -20,11 +20,15 @@ class FeeGroup extends Model
         return $this->belongsTo(Club::class);
     }
 
-    public function players(): BelongsToMany
-    {
+    public function players(): BelongsToMany {
         return $this->belongsToMany(Player::class)
             ->withPivot('amount_override')
             ->withTimestamps();
+    }
+
+    public function amountForPlayer(Player $player): float {
+        $override = $player->pivot->amount_override ?? null;
+        return (float) ($override ?? $this->default_amount);
     }
 
     public function isActive(): bool
@@ -32,10 +36,5 @@ class FeeGroup extends Model
         return $this->status === 'aktivna';
     }
 
-    /** Iznos za konkretnog igrača: override ako postoji, inače grupni. */
-    public function amountForPlayer(Player $player): float
-    {
-        $override = $player->pivot->amount_override ?? null;
-        return (float) ($override ?? $this->default_amount);
-    }
+    
 }

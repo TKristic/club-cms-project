@@ -21,10 +21,9 @@ class ManageSmtp extends Page implements HasForms
 
     public ?array $data = [];
 
-    public function mount(): void
-    {
-        $settings = app(SmtpSettingsService::class)->all();
-        $settings['password'] = ''; // lozinku ne prikazujemo
+    public function mount(): void {
+        $settings = app(SmtpSettingsService::class)->all(decrypt: true);
+        $settings['password'] = '';
         $this->form->fill($settings);
     }
 

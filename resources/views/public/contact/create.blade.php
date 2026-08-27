@@ -25,16 +25,16 @@
 
     <form method="POST" action="{{ route('contact.store') }}" class="bg-white rounded-xl shadow p-6 space-y-4">
         @csrf
-        <input name="name" value="{{ old('name') }}" placeholder="Vaše ime"
+        <input name="name" value="{{ old('name') }}" placeholder="{{ __('messages.name') }}"
                class="w-full border rounded-lg px-3 py-2" required>
-        <input type="email" name="email" value="{{ old('email') }}" placeholder="E-mail"
+        <input type="email" name="email" value="{{ old('email') }}" placeholder="{{ __('messages.email') }}"
                class="w-full border rounded-lg px-3 py-2" required>
-        <input name="subject" value="{{ old('subject') }}" placeholder="Naslov (nije obavezno)"
+        <input name="subject" value="{{ old('subject') }}" placeholder="{{ __('messages.subject') }}"
                class="w-full border rounded-lg px-3 py-2">
-        <textarea name="message" rows="5" placeholder="Poruka"
+        <textarea name="message" rows="5" placeholder="{{ __('messages.message') }}"
                   class="w-full border rounded-lg px-3 py-2" required>{{ old('message') }}</textarea>
         <button class="w-full py-2 rounded-lg font-semibold text-white"
-                style="background: var(--klub-primarna)">Pošalji poruku</button>
+                style="background: var(--klub-primarna)">{{ __('messages.submit') }}</button>
     </form>
 </div>
 @endsection

@@ -15,8 +15,7 @@ class Gallery extends Model
         return $this->belongsTo(Club::class);
     }
 
-    public function media(): HasMany
-    {
+    public function media(): HasMany {
         return $this->hasMany(Media::class);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="mb-8">
-    <h1 class="text-4xl font-extrabold" style="color: var(--klub-primarna)">Momčad</h1>
+    <h1 class="text-4xl font-extrabold" style="color: var(--klub-primarna)">{{ __('messages.team_title') }}</h1>
     <div class="h-1 w-20 mt-3 rounded" style="background: var(--klub-sekundarna)"></div>
 </div>
 
@@ -9,18 +9,18 @@
     <section class="mb-12">
         <h2 class="text-2xl font-bold mb-5 flex items-center gap-3">
             <span style="color: var(--klub-primarna)">{{ $category->name }}</span>
-            <span class="text-sm font-normal text-gray-400">{{ $category->players->count() }} igrača</span>
+            <span class="text-sm font-normal text-gray-400">{{ $category->players->count() }} {{ __('messages.players_count') }}</span>
         </h2>
 
         @if($category->players->isEmpty())
-            <p class="text-gray-400 text-sm">Nema unesenih igrača.</p>
+            <p class="text-gray-400 text-sm">{{ __('messages.no_players') }}</p>
         @else
             <div class="grid gap-5 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
                 @foreach($category->players as $player)
                     <div class="group bg-white rounded-2xl shadow hover:shadow-xl transition overflow-hidden">
                         <div class="relative h-48 overflow-hidden">
-                            @if($player->photo)
-                                <img src="{{ asset('storage/'.$player->photo) }}"
+                            @if($player->photo_blob)
+                                <img src="{{ route('player.photoBlob', $player) }}"
                                      class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-white text-5xl font-extrabold"
@@ -36,7 +36,7 @@
                         <div class="p-3 text-center">
                             <p class="font-bold leading-tight">{{ $player->full_name }}</p>
                             <p class="text-xs text-gray-500 mt-1">
-                                {{ $player->position }}@if($player->age) · {{ $player->age }} g.@endif
+                                {{ $player->position }}@if($player->age) · {{ $player->age }} {{ __('messages.years_short') }}@endif
                             </p>
                         </div>
                     </div>

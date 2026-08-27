@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <div class="mb-8">
-    <h1 class="text-4xl font-extrabold" style="color: var(--klub-primarna)">Vijesti</h1>
+    <h1 class="text-4xl font-extrabold" style="color: var(--klub-primarna)">{{ __('messages.news_title') }}</h1>
     <div class="h-1 w-20 mt-3 rounded" style="background: var(--klub-sekundarna)"></div>
 </div>
 
 @if($news->isEmpty())
-    <p class="text-gray-500">Trenutno nema objavljenih vijesti.</p>
+    <p class="text-gray-500">{{ __('messages.no_news') }}</p>
 @else
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         @foreach($news as $article)

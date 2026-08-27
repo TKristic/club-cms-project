@@ -28,20 +28,27 @@
                 <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
                     @php
                         $links = [
-                            '/' => 'Početna', '/vijesti' => 'Vijesti', '/momcad' => 'Momčad',
-                            '/galerija' => 'Galerija', '/forum' => 'Forum', '/upis' => 'Upis', '/kontakt' => 'Kontakt',
+                            '/' => 'home', '/vijesti' => 'news', '/momcad' => 'team',
+                            '/galerija' => 'gallery', '/forum' => 'forum', '/upis' => 'enroll', '/kontakt' => 'contact',
                         ];
                     @endphp
-                    @foreach($links as $url => $label)
+                    @foreach($links as $url => $key)
                         <a href="{{ $url }}"
-                           class="px-3 py-2 rounded-lg hover:bg-white/15 transition {{ request()->is(trim($url,'/') ?: '/') ? 'bg-white/20' : '' }}">
-                            {{ $label }}
+                        class="px-3 py-2 rounded-lg hover:bg-white/15 transition {{ request()->is(trim($url,'/') ?: '/') ? 'bg-white/20' : '' }}">
+                            {{ __('messages.' . $key) }}
                         </a>
                     @endforeach
                 </nav>
 
                 {{-- Desno: prijava/odjava --}}
                 <div class="flex items-center gap-3 text-sm">
+                        <div class="flex items-center gap-1">
+                            <a href="{{ route('locale.set', 'hr') }}"
+                            class="px-2 py-1 rounded {{ app()->getLocale() === 'hr' ? 'bg-white/25 font-semibold' : 'opacity-70 hover:opacity-100' }}">HR</a>
+                            <a href="{{ route('locale.set', 'en') }}"
+                            class="px-2 py-1 rounded {{ app()->getLocale() === 'en' ? 'bg-white/25 font-semibold' : 'opacity-70 hover:opacity-100' }}">EN</a>
+                        </div>
+
                     @auth
                         <span class="hidden sm:inline opacity-90">{{ auth()->user()->name }}</span>
                         <form method="POST" action="{{ route('logout') }}">
@@ -56,8 +63,8 @@
 
             {{-- Navigacija (mobitel) --}}
             <nav class="lg:hidden flex gap-1 overflow-x-auto pb-3 text-sm text-white/90">
-                @foreach($links as $url => $label)
-                    <a href="{{ $url }}" class="px-3 py-1.5 rounded-lg bg-white/10 whitespace-nowrap">{{ $label }}</a>
+                @foreach($links as $url => $key)
+                    <a href="{{ $url }}" class="px-3 py-1.5 rounded-lg bg-white/10 whitespace-nowrap">{{ __('messages.' . $key) }}</a>
                 @endforeach
             </nav>
         </div>
@@ -74,23 +81,23 @@
                     @if($club?->logo)<img src="{{ asset('storage/'.$club->logo) }}" class="h-8 w-8 object-contain">@endif
                     {{ $club?->name }}
                 </div>
-                <p class="opacity-75">Službene stranice kluba.</p>
+                <p class="opacity-75">{{ __('messages.footer_tagline') }}</p>
             </div>
             <div>
-                <p class="font-semibold text-white mb-2">Kontakt</p>
+                <p class="font-semibold text-white mb-2">{{ __('messages.contact') }}</p>
                 @if($club?->contact_email)<p>✉ {{ $club->contact_email }}</p>@endif
                 @if($club?->contact_phone)<p>☎ {{ $club->contact_phone }}</p>@endif
                 @if($club?->address)<p>📍 {{ $club->address }}</p>@endif
             </div>
             <div>
-                <p class="font-semibold text-white mb-2">Brzi linkovi</p>
-                <a href="/vijesti" class="block hover:underline">Vijesti</a>
-                <a href="/momcad" class="block hover:underline">Momčad</a>
-                <a href="/upis" class="block hover:underline">Upis u klub</a>
+                <p class="font-semibold text-white mb-2">{{ __('messages.quick_links') }}</p>
+                <a href="/vijesti" class="block hover:underline">{{ __('messages.news') }}</a>
+                <a href="/momcad" class="block hover:underline">{{ __('messages.team') }}</a>
+                <a href="/upis" class="block hover:underline">{{ __('messages.join_club') }}</a>
             </div>
         </div>
         <div class="border-t border-white/10 py-4 text-center text-xs opacity-60">
-            © {{ date('Y') }} {{ $club?->name }}. Sva prava pridržana.
+            © {{ date('Y') }} {{ $club?->name }}. {{ __('messages.rights_reserved') }}
         </div>
     </footer>
 </body>

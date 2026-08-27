@@ -1,22 +1,111 @@
 <?php
 
 return [
-    'home'     => 'Home',
-    'news'     => 'News',
-    'team'     => 'Team',
-    'gallery'  => 'Gallery',
-    'results'  => 'Results',
-    'enroll'   => 'Enrollment',
-    'contact'  => 'Contact',
-    'forum'    => 'Forum',
-    'login'    => 'Login',
-    'logout'   => 'Logout',
+    'home' => 'Home',
+    'news' => 'News',
+    'team' => 'Team',
+    'gallery' => 'Gallery',
+    'results' => 'Results',
+    'enroll' => 'Enrollment',
+    'contact' => 'Contact',
+    'forum' => 'Forum',
+    'login' => 'Login',
+    'logout' => 'Logout',
     'register' => 'Register',
+    
+    'official_site' => 'Official club website',
+    'latest_news' => 'Latest news',
+    'join_club' => 'Join the club',
+    
+    'next_match' => 'Next match',
+    'previous_match' => 'Previous match',
+    'forecast_for_match' => 'Forecast for the next match',
+    
+    'all_news' => 'All news',
+    'standings' => 'Standings',
+    'schedule' => 'Schedule',
+    'no_upcoming' => 'No upcoming matches.',
+    'results_unavailable' => 'Results are currently unavailable.',
+   
+    'col_club' => 'Club',
+    'col_played' => 'P',
+    'col_goaldiff' => 'GD',
+    'col_points' => 'Pts',
 
-    'welcome'      => 'Welcome to the official club website.',
-    'latest_news'  => 'Latest news',
-    'all_news'     => 'All news',
-    'no_news'      => 'There are currently no published news.',
-    'contact_title'=> 'Contact us',
+        // footer
+    'quick_links' => 'Quick links',
+    'footer_tagline' => 'Official club website.',
+    'rights_reserved' => 'All rights reserved.',
+
+    // news
+    'news_title' => 'News',
+    'no_news' => 'There are currently no published news.',
+    'back_to_news' => '← All news',
+    'published_on' => 'Published',
+
+    // team
+    'team_title' => 'Team',
+    'players_count' => 'players',
+    'no_players' => 'No players added.',
+    'position' => 'Position',
+    'years_short' => 'y.',
+
+    // gallery
+    'gallery_title' => 'Gallery',
+    'no_galleries' => 'No galleries yet.',
+    'images_count' => 'images',
+    'back_to_galleries' => '← All galleries',
+    'empty_gallery' => 'The gallery is empty.',
+
+        // form common
+    'submit' => 'Submit',
+    'save' => 'Save',
+    'name' => 'Full name',
+    'email' => 'Email',
+    'phone' => 'Phone',
+    'message' => 'Message',
+
+    // login / register
+    'login_title' => 'Login',
+    'register_title' => 'Registration',
+    'password' => 'Password',
+    'password_confirm' => 'Confirm password',
+    'remember_me' => 'Remember me',
+    'do_login' => 'Log in',
+    'do_register' => 'Register',
+    'no_account' => "Don't have an account?",
+    'login_invalid' => 'Invalid login credentials.',
+
+    // enrollment
     'enroll_title' => 'Join the club',
+    'child_first_name' => "Child's first name",
+    'child_last_name' => "Child's last name",
+    'child_birth_date' => "Child's date of birth",
+    'enroll_parent_info' => 'Parent information',
+    'parent_name' => "Parent's full name",
+    'parent_email' => "Parent's email",
+    'parent_phone' => "Parent's phone",
+    'note' => 'Note',
+    'enroll_review' => 'Review the entered data',
+    'enroll_confirm' => 'Confirm enrollment',
+    'enroll_back' => 'Back to edit',
+    'enroll_success' => 'Your enrollment request has been received.',
+
+    // contact
+    'contact_title' => 'Contact us',
+    'subject' => 'Subject',
+    'contact_success' => 'Your message has been sent.',
+
+    // forum
+    'forum_title' => 'Forum',
+    'new_topic' => 'New topic',
+    'login_to_post' => 'Log in to post',
+    'no_topics' => 'No topics yet.',
+    'replies' => 'replies',
+    'topic_title' => 'Topic title',
+    'your_message' => 'Your message',
+    'publish_topic' => 'Publish topic',
+    'reply' => 'Reply',
+    'login_to_reply' => 'to reply.',
+    'back_to_topics' => '← All topics',
 ];

@@ -8,7 +8,7 @@ use App\Services\HnsScraperService;
 
 class HomeController extends Controller
 {
-    public function index(HnsScraperService $hns)
+    public function index(HnsScraperService $hns, \App\Services\WeatherService $weather)
     {
         $news = News::published()->latest('published_at')->take(3)->get();
 
@@ -23,6 +23,7 @@ class HomeController extends Controller
             'clubHnsId' => $hns->clubId(),
             'recent'    => $split['recent'],
             'upcoming'  => $split['upcoming'],
+            'weather'   => $weather->current(),
         ]);
     }
 }

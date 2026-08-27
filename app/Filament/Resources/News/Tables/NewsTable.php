@@ -11,6 +11,10 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Actions\Action;
+use Filament\Forms\Components\FileUpload;
+use Filament\Notifications\Notification;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class NewsTable
 {
@@ -44,6 +48,45 @@ class NewsTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                Action::make('exportJson')
+                    ->label('Izvoz JSON')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->color('gray')
+                    ->action(function () {
+                        $json = app(\App\Services\NewsJsonService::class)->export();
+
+                        return response()->streamDownload(
+                            fn () => print($json),
+                            'vijesti-' . now()->format('Y-m-d') . '.json',
+                            ['Content-Type' => 'application/json']
+                        );
+                    }),
+
+                Action::make('importJson')
+                    ->label('Uvoz JSON')
+                    ->icon('heroicon-o-arrow-up-tray')
+                    ->color('gray')
+                    ->schema([
+                        FileUpload::make('file')
+                            ->label('JSON datoteka')
+                            ->acceptedFileTypes(['application/json'])
+                            ->storeFiles(false)
+                            ->required(),
+                    ])
+                    ->action(function (array $data) {
+                        $upload = $data['file'];
+                        $file = is_array($upload) ? reset($upload) : $upload;
+
+                        $json = $file->get();   // pročitaj sadržaj učitane datoteke
+                        $count = app(\App\Services\NewsJsonService::class)->import($json);
+
+                        Notification::make()
+                            ->title("Uvezeno vijesti: {$count}")
+                            ->success()
+                            ->send();
+                    }),
             ]);
     }
 }

@@ -56,7 +56,7 @@ class EnrollmentsTable
                             'category_id'   => $data['category_id'],
                             'first_name'    => $record->child_first_name,
                             'last_name'     => $record->child_last_name,
-                            'email'         => $record->parent_email,   // ← prenosimo mail roditelja
+                            'email'         => $record->parent_email, 
                             'birth_date'    => $record->child_birth_date,
                             'jersey_number' => $data['jersey_number'] ?? null,
                         ]);

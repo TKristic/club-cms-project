@@ -10,41 +10,49 @@
                  class="h-24 w-24 mx-auto mb-5 object-contain drop-shadow-lg">
         @endif
         <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">{{ $club?->name }}</h1>
-        <p class="mt-3 text-lg opacity-90">Službene stranice kluba</p>
+        <p class="mt-3 text-lg opacity-90">{{ __('messages.official_site') }}</p>
         <div class="mt-8 flex flex-wrap gap-3 justify-center">
             <a href="/vijesti" class="px-6 py-3 rounded-xl font-semibold text-gray-900 shadow-lg"
-               style="background: var(--klub-sekundarna)">Najnovije vijesti</a>
+               style="background: var(--klub-sekundarna)">{{ __('messages.latest_news') }}</a>
             <a href="/upis" class="px-6 py-3 rounded-xl font-semibold bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30">
-                Upiši se u klub
+                {{ __('messages.join_club') }}
             </a>
         </div>
     </div>
 </section>
 
-{{-- SLJEDEĆA / PRETHODNA UTAKMICA --}}
 @if(count($upcoming) || count($recent))
 <section class="grid gap-4 sm:grid-cols-2 mb-12">
     @if($next = ($upcoming[0] ?? null))
         <div class="bg-white rounded-2xl shadow p-5">
-            <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Sljedeća utakmica</p>
+            <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">{{ __('messages.next_match') }}</p>
             @include('public.partials.match', ['m' => $next])
         </div>
     @endif
     @if($last = ($recent[0] ?? null))
         <div class="bg-white rounded-2xl shadow p-5">
-            <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">Prethodna utakmica</p>
+            <p class="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">{{ __('messages.previous_match') }}</p>
             @include('public.partials.match', ['m' => $last])
         </div>
     @endif
 </section>
 @endif
 
-{{-- VIJESTI --}}
+@if($weather && ($next = ($upcoming[0] ?? null)))
+    <div class="bg-white rounded-2xl shadow p-4 mb-12 flex items-center justify-center gap-3 text-gray-700">
+        <span class="text-3xl">{{ $weather['icon'] }}</span>
+        <div class="text-center">
+            <p class="text-sm text-gray-400">{{ __('messages.forecast_for_match') }} ({{ $next['date'] }})</p>
+            <p class="font-semibold">{{ $weather['temp'] }}°C · {{ $weather['description'] }}</p>
+        </div>
+    </div>
+@endif
+
 @if($news->isNotEmpty())
 <section class="mb-12">
     <div class="flex items-center justify-between mb-5">
-        <h2 class="text-2xl font-bold" style="color: var(--klub-primarna)">Najnovije vijesti</h2>
-        <a href="/vijesti" class="text-sm text-gray-500 hover:underline">Sve vijesti →</a>
+        <h2 class="text-2xl font-bold" style="color: var(--klub-primarna)">{{ __('messages.latest_news') }}</h2>
+        <a href="/vijesti" class="text-sm text-gray-500 hover:underline">{{ __('messages.all_news') }} →</a>
     </div>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         @foreach($news as $article)
@@ -71,17 +79,17 @@
 <section class="grid gap-8 lg:grid-cols-5 mb-12">
     {{-- Ljestvica --}}
     <div class="lg:col-span-3">
-        <h2 class="text-2xl font-bold mb-4" style="color: var(--klub-primarna)">Ljestvica</h2>
+        <h2 class="text-2xl font-bold mb-4" style="color: var(--klub-primarna)">{{ __('messages.standings') }}</h2>
         <div class="bg-white rounded-2xl shadow overflow-hidden">
             <p class="px-4 py-2 text-xs text-gray-500 border-b">{{ $hns['standings']['title'] }}</p>
             <table class="w-full text-sm">
                 <thead>
                     <tr class="text-gray-400 text-xs">
                         <th class="text-left px-3 py-2 font-medium">#</th>
-                        <th class="text-left px-2 py-2 font-medium">Klub</th>
-                        <th class="px-2 py-2 font-medium">Ut</th>
-                        <th class="px-2 py-2 font-medium">GR</th>
-                        <th class="px-3 py-2 font-medium text-right">Bod</th>
+                        <th class="text-left px-2 py-2 font-medium">{{ __('messages.col_club') }}</th>
+                        <th class="px-2 py-2 font-medium">{{ __('messages.col_played') }}</th>
+                        <th class="px-2 py-2 font-medium">{{ __('messages.col_goaldiff') }}</th>
+                        <th class="px-3 py-2 font-medium text-right">{{ __('messages.col_points') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,19 +116,19 @@
 
     {{-- Raspored --}}
     <div class="lg:col-span-2">
-        <h2 class="text-2xl font-bold mb-4" style="color: var(--klub-primarna)">Raspored</h2>
+        <h2 class="text-2xl font-bold mb-4" style="color: var(--klub-primarna)">{{ __('messages.schedule') }}</h2>
         <div class="space-y-3">
             @forelse($upcoming as $m)
                 <div class="bg-white rounded-xl shadow p-3">
                     @include('public.partials.match', ['m' => $m, 'compact' => true])
                 </div>
             @empty
-                <p class="text-gray-400 text-sm">Nema nadolazećih utakmica.</p>
+                <p class="text-gray-400 text-sm">{{ __('messages.no_upcoming') }}</p>
             @endforelse
         </div>
     </div>
 </section>
 @elseif(isset($hns['error']))
-    <p class="text-center text-sm text-gray-400 mb-12">Rezultati trenutno nisu dostupni.</p>
+    <p class="text-center text-sm text-gray-400 mb-12">{{ __('messages.results_unavailable') }}</p>
 @endif
 @endsection

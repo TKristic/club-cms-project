@@ -17,26 +17,26 @@
 
     <form method="POST" action="{{ route('enroll.review') }}" class="bg-white rounded-xl shadow p-6 space-y-4">
         @csrf
-        <h2 class="font-semibold text-gray-700">Podaci o djetetu</h2>
-        <input name="child_first_name" value="{{ old('child_first_name') }}" placeholder="Ime djeteta"
+        <h2 class="font-semibold text-gray-700">{{ __('messages.enroll_title') }}</h2>
+        <input name="child_first_name" value="{{ old('child_first_name') }}" placeholder="{{ __('messages.child_first_name') }}"
                class="w-full border rounded-lg px-3 py-2" required>
-        <input name="child_last_name" value="{{ old('child_last_name') }}" placeholder="Prezime djeteta"
+        <input name="child_last_name" value="{{ old('child_last_name') }}" placeholder="{{ __('messages.child_last_name') }}"
                class="w-full border rounded-lg px-3 py-2" required>
         <input type="date" name="child_birth_date" value="{{ old('child_birth_date') }}"
                class="w-full border rounded-lg px-3 py-2" required>
 
-        <h2 class="font-semibold text-gray-700 pt-2">Podaci o roditelju</h2>
-        <input name="parent_name" value="{{ old('parent_name') }}" placeholder="Ime i prezime roditelja"
+        <h2 class="font-semibold text-gray-700 pt-2">{{ __('messages.enroll_parent_info') }}</h2>
+        <input name="parent_name" value="{{ old('parent_name') }}" placeholder="{{ __('messages.parent_name') }}"
                class="w-full border rounded-lg px-3 py-2" required>
-        <input type="email" name="parent_email" value="{{ old('parent_email') }}" placeholder="E-mail"
+        <input type="email" name="parent_email" value="{{ old('parent_email') }}" placeholder="{{ __('messages.parent_email') }}"
                class="w-full border rounded-lg px-3 py-2" required>
-        <input name="parent_phone" value="{{ old('parent_phone') }}" placeholder="Telefon"
+        <input name="parent_phone" value="{{ old('parent_phone') }}" placeholder="{{ __('messages.parent_phone') }}"
                class="w-full border rounded-lg px-3 py-2" required>
         <textarea name="note" placeholder="Napomena (nije obavezno)"
                   class="w-full border rounded-lg px-3 py-2">{{ old('note') }}</textarea>
 
         <button class="w-full py-2 rounded-lg font-semibold text-gray-900"
-                style="background: var(--klub-sekundarna)">Dalje na pregled →</button>
+                style="background: var(--klub-sekundarna)">{{ __('messages.enroll_review') }} →</button>
     </form>
 </div>
 @endsection

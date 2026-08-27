@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\FeeGroup;
 
-#[Fillable(['club_id', 'category_id', 'first_name', 'last_name', 'email', 'position', 'birth_date', 'jersey_number', 'photo'])]
+#[Fillable(['club_id', 'category_id', 'first_name', 'last_name', 'email', 'position', 'birth_date', 'jersey_number', 'photo', 'photo_blob'])]
 class Player extends Model
 {
+
+    protected $hidden = ['photo_blob'];
     protected function casts(): array
     {
         return ['birth_date' => 'date'];

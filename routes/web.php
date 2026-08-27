@@ -13,6 +13,8 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\SponsorController;
+use App\Models\Player;
+use Illuminate\Http\Response;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -61,3 +63,10 @@ Route::get('/sponzori/{format?}', [SponsorController::class, 'index'])->name('sp
 Route::post('/sponzori/{format}', [SponsorController::class, 'store'])->name('sponsors.store');
 Route::put('/sponzori/{format}/{id}', [SponsorController::class, 'update'])->name('sponsors.update');
 Route::delete('/sponzori/{format}/{id}', [SponsorController::class, 'destroy'])->name('sponsors.destroy');
+
+Route::get('/igrac/{player}/slika-blob', function (Player $player) {
+    abort_if(! $player->photo_blob, 404);
+
+    return response($player->photo_blob)
+        ->header('Content-Type', 'image/jpeg');
+})->name('player.photoBlob');

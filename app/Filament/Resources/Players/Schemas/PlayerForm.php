@@ -27,7 +27,13 @@ class PlayerForm
             TextInput::make('position')->label('Pozicija')->maxLength(255),
             DatePicker::make('birth_date')->label('Datum rođenja')->displayFormat('d.m.Y.'),
             TextInput::make('jersey_number')->label('Broj dresa')->numeric()->minValue(1)->maxValue(99),
-            FileUpload::make('photo')->label('Fotografija')->image()->disk('public')->directory('players'),
+            FileUpload::make('photo_blob_upload')
+                ->label('Fotografija')
+                ->image()
+                ->storeFiles(false)
+                ->dehydrated(false),
+            // Zamijenjeno radi bloba
+            // FileUpload::make('photo')->label('Fotografija')->image()->disk('public')->directory('players'),
         ]);
     }
 }

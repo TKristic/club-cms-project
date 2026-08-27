@@ -11,7 +11,7 @@ class ClubMailer
 
     public function configure(): void
     {
-        $s = $this->settings->all(decryptPassword: true);
+        $s = $this->settings->all(decrypt: true);
         $useSsl = ($s['encryption'] === 'ssl') || ((int) $s['port'] === 465);
 
         config([

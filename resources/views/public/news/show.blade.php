@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <article class="max-w-3xl mx-auto">
-    <a href="{{ route('news.index') }}" class="text-sm text-gray-400 hover:underline">← Sve vijesti</a>
+    <a href="{{ route('news.index') }}" class="text-sm text-gray-400 hover:underline">← {{ __('messages.back_to_news') }}</a>
 
     <header class="mt-4 mb-6">
         <p class="text-xs font-semibold uppercase tracking-wide" style="color: var(--klub-sekundarna)">
