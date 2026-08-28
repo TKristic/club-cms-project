@@ -6,7 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PlayerController;
-use App\Http\Controllers\FixtureController;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\InvoiceController;
@@ -26,8 +25,6 @@ Route::get('/galerija', [GalleryController::class, 'index'])->name('gallery.inde
 Route::get('/galerija/{gallery}', [GalleryController::class, 'show'])->name('gallery.show');
 
 Route::get('/momcad', [PlayerController::class, 'index'])->name('players.index');
-
-Route::get('/rezultati', [FixtureController::class, 'index'])->name('fixtures.index');
 
 Route::get('/upis', [EnrollmentController::class, 'create'])->name('enroll.create');
 Route::post('/upis/pregled', [EnrollmentController::class, 'review'])->name('enroll.review');

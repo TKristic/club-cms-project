@@ -48,7 +48,6 @@ class InvoiceService {
             'barcode' => $barcode,
         ]);
 
-        // spremi PDF na javni disk
         $path = 'invoices/' . $invoice->invoice_number . '.pdf';
         \Illuminate\Support\Facades\Storage::disk('public')->put($path, $pdf->output());
 

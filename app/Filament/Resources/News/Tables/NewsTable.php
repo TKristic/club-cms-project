@@ -23,7 +23,7 @@ class NewsTable
         return $table
             ->columns([
                 ImageColumn::make('featured_image')->label('Slika')->disk('public'),
-                TextColumn::make('title')->label('Naslov')->searchable()->sortable(),     // sortiranje
+                TextColumn::make('title')->label('Naslov')->searchable()->sortable(),     
                 TextColumn::make('author.name')->label('Autor')->sortable(),              // LOOKUP polje
                 TextColumn::make('published_at')->label('Objavljeno')->dateTime('d.m.Y.')->sortable(),
                 TextColumn::make('days_ago')->label('Dana od objave')

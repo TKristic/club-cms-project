@@ -14,14 +14,20 @@ class ForumPostsTable
     {
         return $table
             ->columns([
+                TextColumn::make('topic.title')
+                    ->label('Tema')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('author.name')
+                    ->label('Autor')
+                    ->sortable(),
+                TextColumn::make('body')
+                    ->label('Poruka')
+                    ->limit(60),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Kreirano')
+                    ->dateTime('d.m.Y. H:i')
+                    ->sortable(),
             ])
             ->filters([
                 //

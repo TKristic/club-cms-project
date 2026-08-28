@@ -19,7 +19,6 @@ class RunFeeActivation extends Command
     {
         $date = $this->option('date') ? Carbon::parse($this->option('date')) : now();
 
-        // TEST: konkretna grupa (ignorira dan naplate i status-provjeru dana)
         if ($groupId = $this->option('group')) {
             $group = FeeGroup::find($groupId);
             if (! $group) {
@@ -31,7 +30,6 @@ class RunFeeActivation extends Command
             return self::SUCCESS;
         }
 
-        // PRODUKCIJA: sve grupe kojima je danas dan naplate
         $this->info("Aktiviram grupe s danom naplate {$date->day} ({$date->format('Y-m')})");
         $results = $service->activateDue($date);
 

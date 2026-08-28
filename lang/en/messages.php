@@ -32,32 +32,28 @@ return [
     'col_goaldiff' => 'GD',
     'col_points' => 'Pts',
 
-        // footer
+       
     'quick_links' => 'Quick links',
     'footer_tagline' => 'Official club website.',
     'rights_reserved' => 'All rights reserved.',
 
-    // news
     'news_title' => 'News',
     'no_news' => 'There are currently no published news.',
     'back_to_news' => '← All news',
     'published_on' => 'Published',
 
-    // team
     'team_title' => 'Team',
     'players_count' => 'players',
     'no_players' => 'No players added.',
     'position' => 'Position',
     'years_short' => 'y.',
 
-    // gallery
     'gallery_title' => 'Gallery',
     'no_galleries' => 'No galleries yet.',
     'images_count' => 'images',
     'back_to_galleries' => '← All galleries',
     'empty_gallery' => 'The gallery is empty.',
 
-        // form common
     'submit' => 'Submit',
     'save' => 'Save',
     'name' => 'Full name',
@@ -65,7 +61,6 @@ return [
     'phone' => 'Phone',
     'message' => 'Message',
 
-    // login / register
     'login_title' => 'Login',
     'register_title' => 'Registration',
     'password' => 'Password',
@@ -76,7 +71,6 @@ return [
     'no_account' => "Don't have an account?",
     'login_invalid' => 'Invalid login credentials.',
 
-    // enrollment
     'enroll_title' => 'Join the club',
     'child_first_name' => "Child's first name",
     'child_last_name' => "Child's last name",
@@ -91,12 +85,10 @@ return [
     'enroll_back' => 'Back to edit',
     'enroll_success' => 'Your enrollment request has been received.',
 
-    // contact
     'contact_title' => 'Contact us',
     'subject' => 'Subject',
     'contact_success' => 'Your message has been sent.',
 
-    // forum
     'forum_title' => 'Forum',
     'new_topic' => 'New topic',
     'login_to_post' => 'Log in to post',

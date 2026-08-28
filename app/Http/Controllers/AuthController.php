@@ -42,7 +42,7 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
 
-        $user = User::create($data);   // password se auto-hashira (cast 'hashed')
+        $user = User::create($data);   
         $user->assignRole('member');
         Auth::login($user);
 

@@ -10,21 +10,17 @@ use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
-    public function index()
-    {
+    public function index() {
         return News::published()
             ->latest('published_at')
             ->get(['id', 'title', 'slug', 'excerpt', 'published_at']);
     }
 
-    public function show(News $news)
-    {
+    public function show(News $news) {
         return $news->only(['id', 'title', 'slug', 'excerpt', 'body', 'published_at']);
     }
 
-    public function store(Request $request)
-    {
-        // AUTORIZACIJA (#22): samo admin/superadmin smiju kreirati
+    public function store(Request $request) {
         if (! $request->user()->hasAnyRole(['admin', 'superadmin'])) {
             return response()->json(['message' => 'Nemate ovlasti za ovu akciju.'], 403);
         }

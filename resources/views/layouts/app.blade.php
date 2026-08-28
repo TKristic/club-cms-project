@@ -16,7 +16,6 @@
     <header class="sticky top-0 z-50 shadow-sm" style="background: var(--klub-primarna)">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex items-center justify-between h-16 text-white">
-                {{-- Logo + naziv --}}
                 <a href="/" class="flex items-center gap-3 font-bold text-lg shrink-0">
                     @if($club?->logo)
                         <img src="{{ asset('storage/'.$club->logo) }}" class="h-9 w-9 object-contain">
@@ -24,7 +23,6 @@
                     <span class="hidden sm:inline">{{ $club?->name }}</span>
                 </a>
 
-                {{-- Navigacija (desktop) --}}
                 <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
                     @php
                         $links = [
@@ -40,7 +38,6 @@
                     @endforeach
                 </nav>
 
-                {{-- Desno: prijava/odjava --}}
                 <div class="flex items-center gap-3 text-sm">
                         <div class="flex items-center gap-1">
                             <a href="{{ route('locale.set', 'hr') }}"
@@ -53,15 +50,14 @@
                         <span class="hidden sm:inline opacity-90">{{ auth()->user()->name }}</span>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25">Odjava</button>
+                            <button class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25">{{ __('messages.logout')}}</button>
                         </form>
                     @else
-                        <a href="/prijava" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25">Prijava</a>
+                        <a href="/prijava" class="px-3 py-1.5 rounded-lg bg-white/15 hover:bg-white/25">{{ __('messages.login')}}</a>
                     @endauth
                 </div>
             </div>
 
-            {{-- Navigacija (mobitel) --}}
             <nav class="lg:hidden flex gap-1 overflow-x-auto pb-3 text-sm text-white/90">
                 @foreach($links as $url => $key)
                     <a href="{{ $url }}" class="px-3 py-1.5 rounded-lg bg-white/10 whitespace-nowrap">{{ __('messages.' . $key) }}</a>

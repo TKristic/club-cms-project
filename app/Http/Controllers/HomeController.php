@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Services\HnsScraperService;
+use App\Services\WeatherService;
 
 class HomeController extends Controller
 {
-    public function index(HnsScraperService $hns, \App\Services\WeatherService $weather)
+    public function index(HnsScraperService $hns, WeatherService $weather)
     {
         $news = News::published()->latest('published_at')->take(3)->get();
 

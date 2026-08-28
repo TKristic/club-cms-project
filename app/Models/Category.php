@@ -16,11 +16,5 @@ class Category extends Model
 
     public function players(): \Illuminate\Database\Eloquent\Relations\HasMany {
         return $this->hasMany(Player::class);
-    }
-
-    public function fixtures(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Fixture::class);
-    }
-    
+    } 
 }

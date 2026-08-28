@@ -74,10 +74,8 @@
 </section>
 @endif
 
-{{-- LJESTVICA + RASPORED --}}
 @if($hns['ok'] ?? false)
 <section class="grid gap-8 lg:grid-cols-5 mb-12">
-    {{-- Ljestvica --}}
     <div class="lg:col-span-3">
         <h2 class="text-2xl font-bold mb-4" style="color: var(--klub-primarna)">{{ __('messages.standings') }}</h2>
         <div class="bg-white rounded-2xl shadow overflow-hidden">
@@ -114,7 +112,6 @@
         </div>
     </div>
 
-    {{-- Raspored --}}
     <div class="lg:col-span-2">
         <h2 class="text-2xl font-bold mb-4" style="color: var(--klub-primarna)">{{ __('messages.schedule') }}</h2>
         <div class="space-y-3">

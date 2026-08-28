@@ -17,8 +17,7 @@ class EditPlayer extends EditRecord
         ];
     }
 
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
+    protected function mutateFormDataBeforeSave(array $data): array {
         return $this->handleBlob($data);
     }
 

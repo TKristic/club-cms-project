@@ -30,20 +30,27 @@ class NewsJsonService {
         $count = 0;
 
         foreach ($items as $item) {
-            if (empty($item['title'])) {
+            $title = trim($item['title'] ?? '');
+            $body  = trim($item['body'] ?? '');
+
+            if ($title === '' || $body === '') {
                 continue;
             }
 
-            News::create([
-                'club_id'      => $clubId,
-                'user_id'      => auth()->id(),
-                'title'        => $item['title'],
-                'slug'         => Str::slug($item['title']) . '-' . Str::random(5),
-                'excerpt'      => $item['excerpt'] ?? null,
-                'body'         => $item['body'] ?? '',
-                'published_at' => $item['published_at'] ?? now(),
-            ]);
-            $count++;
+            try {
+                News::create([
+                    'club_id'      => $clubId,
+                    'user_id'      => auth()->id(),
+                    'title'        => $title,
+                    'slug'         => Str::slug($title) . '-' . Str::random(5),
+                    'excerpt'      => $item['excerpt'] ?? null,
+                    'body'         => $body,
+                    'published_at' => $item['published_at'] ?? now(),
+                ]);
+                $count++;
+            } catch (\Throwable $e) {
+                continue;
+            }
         }
 
         return $count;

@@ -52,7 +52,7 @@ class SmtpSettingsService
         }
 
         $fields = ['host', 'port', 'username', 'password', 'encryption', 'from_address', 'from_name'];
-        $lines = ['; SMTP postavke kluba — sve vrijednosti AES-šifrirane'];
+        $lines = [];
 
         foreach ($fields as $field) {
             if ($field === 'password' && $data['password'] === null) {

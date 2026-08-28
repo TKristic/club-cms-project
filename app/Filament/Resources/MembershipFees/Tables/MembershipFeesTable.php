@@ -45,27 +45,35 @@ class MembershipFeesTable
                         ->send();
                 }),
                 Action::make('emailInvoice')
-                ->label('Pošalji mailom')
-                ->icon('heroicon-o-envelope')
-                ->color('gray')
-                ->schema([
-                    \Filament\Forms\Components\TextInput::make('email')
-                        ->label('E-mail primatelja')->email()->required(),
-                ])
-                ->action(function (array $data, $record) {
-                    try {
-                        $invoice = app(\App\Services\InvoiceService::class)->generateForFee($record);
-                        app(\App\Services\ClubMailer::class)->send(
-                            $data['email'],
-                            new \App\Mail\MembershipFeeInvoiceMail($invoice),
-                        );
-                        \Filament\Notifications\Notification::make()
-                            ->title('Uplatnica poslana na ' . $data['email'])->success()->send();
-                    } catch (\Throwable $e) {
-                        \Filament\Notifications\Notification::make()
-                            ->title('Slanje nije uspjelo')->body($e->getMessage())->danger()->send();
-                    }
-                }),
+                    ->label('Pošalji mailom')
+                    ->icon('heroicon-o-envelope')
+                    ->color('gray')
+                    ->requiresConfirmation()
+                    ->modalHeading('Slanje uplatnice')
+                    ->modalDescription(fn ($record) => 'Uplatnica će biti poslana na: ' . ($record->player->email ?? 'nepoznato'))
+                    ->action(function ($record) {
+                        $email = $record->player->email ?? null;
+
+                        if (! $email) {
+                            \Filament\Notifications\Notification::make()
+                                ->title('Igrač nema e-mail adresu')
+                                ->danger()->send();
+                            return;
+                        }
+
+                        try {
+                            $invoice = app(\App\Services\InvoiceService::class)->generateForFee($record);
+                            app(\App\Services\ClubMailer::class)->send(
+                                $email,
+                                new \App\Mail\MembershipFeeInvoiceMail($invoice),
+                            );
+                            \Filament\Notifications\Notification::make()
+                                ->title('Uplatnica poslana na ' . $email)->success()->send();
+                        } catch (\Throwable $e) {
+                            \Filament\Notifications\Notification::make()
+                                ->title('Slanje nije uspjelo')->body($e->getMessage())->danger()->send();
+                        }
+                    }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

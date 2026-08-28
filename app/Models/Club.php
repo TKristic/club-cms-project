@@ -20,8 +20,4 @@ class Club extends Model
         return $this->hasMany(Player::class);
     }
 
-    public function fixtures(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Fixture::class);
-    }
 }

@@ -15,11 +15,9 @@
     </div>
 
     <div class="flex gap-3">
-        {{-- Natrag na uređivanje --}}
         <a href="{{ route('enroll.create') }}"
            class="px-4 py-2 rounded-lg border text-gray-600">← {{ __('messages.enroll_back') }}</a>
 
-        {{-- Potvrda → konačno spremanje, podaci se prenose skrivenim poljima --}}
         <form method="POST" action="{{ route('enroll.store') }}" class="flex-1">
             @csrf
             @foreach($data as $key => $value)

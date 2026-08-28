@@ -32,7 +32,7 @@ class Player extends Model
         return trim("{$this->first_name} {$this->last_name}");
     }
 
-    public function getAgeAttribute(): ?int          // CALCULATED polje (dob)
+    public function getAgeAttribute(): ?int          // calculated polje
     {
         return $this->birth_date?->age;
     }
